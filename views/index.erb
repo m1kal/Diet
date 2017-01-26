@@ -1,0 +1,32 @@
+<a href = "/logout">Log out</a><br/><br/>
+<%=diet.calories%> total calories.<br/><br/>
+
+<%diet.each do |day|%>
+  <p> Day <a href="/day/<%=day.date%>">
+    <%= "<b>"if day.date==diet.current_day.date %>
+    <%=day.date%></a>
+    <%= "</b>"if day.date==diet.current_day.date %>, <%=day.calories%> calories
+  <a href = "/clear/<%=day.date%>">Clear</a></p>
+  <table style="border:1px solid black">
+    <tr><th>Meal</th><th>Calories</th><td>
+    <%=day.show_items(:meals) do |name, calories|
+      '<tr><td>' + name + '</td><td>' + calories.to_s + '</td></tr>'
+    end%>
+ </table>
+<%end%>
+
+<form action="/" method="post">
+  <p> Add meal to current day</p>
+  <table><tr><td>Name</td><td>Calories</td><td/></tr>
+  <tr><td><input type="text" name="name"/> </td>
+  <td><input type="text" name="calories" class="num"/> </td>
+  <td><input type="submit" value="Add"/></td></tr>
+</table>
+</form>
+
+<form action="/add_day" method="post">
+  <input type="submit" value="Add day"/>
+  <input type = "text" name="date" value="<%=Time.now.to_s[0,10]%>"/>
+</form>
+<br/><br/>
+<a href="/save">Save diet</a>

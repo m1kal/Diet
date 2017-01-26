@@ -1,0 +1,41 @@
+body {
+  background-color: #C0C0E0;
+}
+table {
+  color: blue;
+}
+p {
+  color: grey;
+}
+
+a {
+  color: #804040
+}
+
+#calculator {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 250px;
+  background-color: #E0E0FF
+}
+
+ label {
+  float:left;
+  text-align: right;
+  width: 120px;
+}
+
+input.num {
+  width: 50px;
+  float: left;
+}
+
+fieldset p {
+  clear: both;
+  padding: 5px;
+}
+#calculate {
+  margin-top: 10px;
+  margin-left: 120px;
+}
