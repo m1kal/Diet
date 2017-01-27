@@ -66,10 +66,10 @@ class Diet
     self
   end
 
-  def add_excercise(input)
+  def add_exercise(input)
     @current_day ||= day(:last)
     add_day(Day.new) if @current_day.nil?
-    @current_day.add_excercise(input)
+    @current_day.add_exercise(input)
     self
   end
 

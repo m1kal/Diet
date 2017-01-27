@@ -3,12 +3,12 @@ class Day
 
   def self.from_json(input)
     data = JSON.parse(input, :symbolize_names => true)
-    new(data[:date], data[:meals], data[:excercises])
+    new(data[:date], data[:meals], data[:exercises])
   end
 
-  def initialize(date = nil, meals = [], excercises = [])
+  def initialize(date = nil, meals = [], exercises = [])
     @meals = meals
-    @excercises = excercises
+    @exercises = exercises
     @date = date || Time.now.to_s[0, 10]
   end
 
@@ -17,8 +17,8 @@ class Day
     self
   end
 
-  def add_excercise(excercise)
-    @excercises << excercise
+  def add_exercise(exercise)
+    @exercises << exercise
     self
   end
 
@@ -26,8 +26,8 @@ class Day
     @meals.dup
   end
 
-  def excercises
-    @excercises.dup
+  def exercises
+    @exercises.dup
   end
 
   def calories
@@ -35,7 +35,7 @@ class Day
   end
 
   def calories_burnt
-    calculate_calories(@excercises)
+    calculate_calories(@exercises)
   end
 
   def calculate_calories(table)
@@ -48,13 +48,13 @@ class Day
 
   def to_json(_options = nil)
     '{"meals":' + @meals.to_json +
-      ', "excercises":' + @excercises.to_json +
+      ', "exercises":' + @exercises.to_json +
       ', "date":' + @date.to_json + '}'
   end
 
   def clear
     @meals = []
-    @excercises = []
+    @exercises = []
   end
 
   def show_items(items)
