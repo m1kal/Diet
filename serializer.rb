@@ -1,10 +1,7 @@
+# FileSerializer
 class FileSerializer
   def self.load(filename)
-    if File.exist?(filename)
-      File.open(filename, 'r:UTF-8', &:read)
-    else
-      '{"days":[]}'
-    end
+    File.exist?(filename) ? File.open(filename, 'r:UTF-8', &:read) : nil
   end
 
   def self.save(json, filename)

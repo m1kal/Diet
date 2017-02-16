@@ -1,18 +1,21 @@
 require 'json'
 require_relative 'day'
 
+# Diet
 class Diet
   attr_reader :current_day
 
   def self.from_storage(serializer, options)
-    from_json(serializer.load(options))
+    from_json(serializer.load(options) || '{"days":[]}')
   end
 
   def self.from_json(json)
-    data = JSON.parse(json, :symbolize_names => true)
-    data[:days].reduce(new) do |acc, day|
+    data = JSON.parse(json, symbolize_names: true)
+    days = data[:days].reduce(new) do |acc, day|
       acc.add_day(Day.from_json(day.to_json))
     end
+    days.select_day(data[:current_day]) unless data[:current_day].nil?
+    days
   end
 
   def to_storage(serializer, options)
@@ -20,7 +23,9 @@ class Diet
   end
 
   def to_json
-    '{"days":' + @days.to_json + '}'
+    '{"days":' + @days.to_json +
+      (@current_day.nil? ? '' : ',"current_day":"' + @current_day.date + '"') +
+      '}'
   end
 
   def initialize
@@ -71,6 +76,10 @@ class Diet
     add_day(Day.new) if @current_day.nil?
     @current_day.add_exercise(input)
     self
+  end
+
+  def add_item(input)
+    send('add_' + input[:type].to_s, input.reject { |key, _| key == :type })
   end
 
   def clear_day(date = nil)

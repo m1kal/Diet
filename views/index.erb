@@ -6,17 +6,31 @@
     <%= "<b>"if day.date==diet.current_day.date %>
     <%=day.date%></a>
     <%= "</b>"if day.date==diet.current_day.date %>, <%=day.calories%> calories
+    <%= ", " + day.calories_burnt.to_s + " calories burnt" unless day.exercises.empty? %>
   <a href = "/clear/<%=day.date%>">Clear</a></p>
   <table style="border:1px solid black">
     <tr><th>Meal</th><th>Calories</th><td>
     <%=day.show_items(:meals) do |name, calories|
       '<tr><td>' + name + '</td><td>' + calories.to_s + '</td></tr>'
     end%>
- </table>
+  </table>
+  <%unless day.exercises.empty?%>
+    <table style="border:1px solid black">
+      <tr><th>Exercise</th><th>Calories</th><td>
+      <%=day.show_items(:exercises) do |name, calories|
+        '<tr><td>' + name + '</td><td>' + calories.to_s + '</td></tr>'
+      end%>
+    </table>
+    <%end%>
 <%end%>
 
 <form action="/" method="post">
-  <p> Add meal to current day</p>
+  <p> Add
+    <select name="type">
+      <option value="meal">meal</option>
+      <option value="exercise">exercise</option>
+    </select>
+    to current day</p>
   <table><tr><td>Name</td><td>Calories</td><td/></tr>
   <tr><td><input type="text" name="name"/> </td>
   <td><input type="text" name="calories" class="num"/> </td>

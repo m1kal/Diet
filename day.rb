@@ -1,8 +1,9 @@
+# Day
 class Day
   attr_reader :date
 
   def self.from_json(input)
-    data = JSON.parse(input, :symbolize_names => true)
+    data = JSON.parse(input, symbolize_names: true)
     new(data[:date], data[:meals], data[:exercises])
   end
 
@@ -58,9 +59,7 @@ class Day
   end
 
   def show_items(items)
-    puts 'showing' + items.to_s
     send(items).collect do |elem|
-      puts elem[:name] + elem[:calories].to_s
       yield(elem[:name], elem[:calories])
     end.join('')
   end

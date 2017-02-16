@@ -13,7 +13,7 @@ class DietUI
   end
 
   def parse(cmd)
-    case (cmd.split(' ').first)
+    case cmd.split(' ').first
     when 'new_diet' then @diet = Diet.new
     when 'show' then show_diet
     when 'total' then puts @diet.calories
@@ -25,11 +25,11 @@ class DietUI
 
   def add_meal(cmd)
     if cmd.size == 3
-      meal = { :name => cmd[1], :calories => cmd[2].to_i }
+      meal = { name: cmd[1], calories: cmd[2].to_i }
     else
       puts 'Give the name and calories'
       input = gets.chomp.split(' ')
-      meal = { :name => input[0], :calories => input[1].to_i }
+      meal = { name: input[0], calories: input[1].to_i }
     end
     @diet.add_meal(meal)
   end
